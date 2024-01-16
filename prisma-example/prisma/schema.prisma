@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Recipes {
+  recid      Int          @id @default(autoincrement())
+  name       String //@default(now())
+  link       String //@updatedAt
+  picture    String
+  ing_in_rec Ing_In_Rec[]
+
+  liked Liked[]
+
+  // @db.VarChar(255) Link som string ?
+  // content   String?
+  // published Boolean  @default(false)
+  // author    User     @relation(fields: [authorId], references: [id])
+  // authorId  Int
+}
+
+model Ingredients {
+  id         Int          @id @default(autoincrement())
+  name       String
+  ing_in_rec Ing_In_Rec[]
+
+  // user   User    @relation(fields: [userId], references: [id])
+  // userId Int     @unique
+}
+
+model Users {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  password String
+  liked    Liked[]
+  // name    String?
+  // posts   Post[]
+  // profile Profile?
+}
+
+model Liked {
+  user_id   Int @default(autoincrement())
+  recipe_id Int
+
+  recipes Recipes @relation(fields: [recipe_id], references: [recid])
+  users   Users   @relation(fields: [user_id], references: [id])
+
+  // name    String?
+  // posts   Post[]
+  // profile Profile?
+
+  @@id([user_id, recipe_id])
+}
+
+model Ing_In_Rec {
+  recipe_id      Int
+  ingredients_id Int
+
+  recipes     Recipes     @relation(fields: [recipe_id], references: [recid])
+  ingredients Ingredients @relation(fields: [ingredients_id], references: [id])
+
+  @@id([recipe_id, ingredients_id])
+}
