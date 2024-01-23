@@ -32,7 +32,7 @@ model Users {
 }
 
 model Liked {
-  user_id   Int @default(autoincrement())
+  user_id   Int 
   recipe_id Int
 
   recipes Recipes @relation(fields: [recipe_id], references: [recid])

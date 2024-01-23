@@ -19,7 +19,6 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
-// funkar!
 app.post("/users", async (req: any, res: any) => {
   try {
     const { username, password } = req.body;
@@ -40,12 +39,10 @@ app.post("/users", async (req: any, res: any) => {
   }
 });
 
-// funkar!
 app.get("/", (req: any, res: any) => {
   res.send("Hello World!");
 });
 
-// funkar!
 app.get("/users", async (req: any, res: any) => {
   try {
     const users = await prisma.users.findMany();
@@ -58,37 +55,14 @@ app.get("/users", async (req: any, res: any) => {
   }
 });
 
-
-// app.post("/recipes", async (req: any, res: any) => {
-//   try {
-//     const { name, link, picture } = req.body;
-
-//     const newRecipe = await prisma.recipes.create({
-//       data: {
-//         name,
-//         link,
-//         picture,
-//       },
-//     });
-
-//     res.json(newRecipe);
-//   } catch (error: any) {
-//     console.log(error.message);
-//     res.status(500).json({
-//       message: "Internal Server Error",
-//     });
-//   }
-// });
-
 app.post("/recipes", async (req: any, res: any) => {
   try {
-    const { name , link , picture } = req.body;
+    const { name , link } = req.body;
 
     const newRecipe = await prisma.recipes.create({
       data: {
         name, // name is provided by the request body
-        link,
-        picture
+        link
       },
     });
 
@@ -217,8 +191,6 @@ app.post("/liked", async (req: any, res: any) => {
   }
 });
 
-
-// funkar!
 app.get("/liked/:id", async (req: any, res: any) => {
   try {
     const id = parseInt(req.params.id);
