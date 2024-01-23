@@ -11,9 +11,20 @@
 
 
         <q-toolbar-title>
-          Quasar App
+          <router-link to="/recept" class="text-white">Quasar app</router-link>
         </q-toolbar-title>
-
+        
+          <div class="headerbutton">
+            <q-btn
+              to="/liked"
+              label="liked"
+              text-color="white"
+              size="10px"
+              color="deep-orange"
+            />
+          </div>
+          
+        
           <div class="headerbutton">
             <q-btn
               to="/login"

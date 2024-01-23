@@ -1,7 +1,14 @@
 const express = require("express");
+require('dotenv').config();
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
+// Log when the connection is established
+prisma.$connect()
+  .then(() => console.log("Database connection established"))
+  .catch((error) => console.error("Error establishing database connection:", error));
+
 var cors = require("cors");
 
 const app = express();
@@ -12,6 +19,7 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
+// funkar!
 app.post("/users", async (req: any, res: any) => {
   try {
     const { username, password } = req.body;
@@ -32,10 +40,12 @@ app.post("/users", async (req: any, res: any) => {
   }
 });
 
+// funkar!
 app.get("/", (req: any, res: any) => {
   res.send("Hello World!");
 });
 
+// funkar!
 app.get("/users", async (req: any, res: any) => {
   try {
     const users = await prisma.users.findMany();
@@ -48,15 +58,37 @@ app.get("/users", async (req: any, res: any) => {
   }
 });
 
+
+// app.post("/recipes", async (req: any, res: any) => {
+//   try {
+//     const { name, link, picture } = req.body;
+
+//     const newRecipe = await prisma.recipes.create({
+//       data: {
+//         name,
+//         link,
+//         picture,
+//       },
+//     });
+
+//     res.json(newRecipe);
+//   } catch (error: any) {
+//     console.log(error.message);
+//     res.status(500).json({
+//       message: "Internal Server Error",
+//     });
+//   }
+// });
+
 app.post("/recipes", async (req: any, res: any) => {
   try {
-    const { name, link, picture } = req.body;
+    const { name , link , picture } = req.body;
 
     const newRecipe = await prisma.recipes.create({
       data: {
-        name,
+        name, // name is provided by the request body
         link,
-        picture,
+        picture
       },
     });
 
@@ -75,7 +107,7 @@ app.get("/recipes", async (req: any, res: any) => {
 
     res.json(recipes);
   } catch (error) {
-    res.status(500).json({
+        res.status(500).json({
       message: "Something went wrong",
     });
   }
@@ -103,7 +135,6 @@ app.post("/ing", async (req: any, res: any) => {
 
     const newIng = await prisma.ingredients.create({
       data: {
-        // name is provided by the request body
         name,
       },
     });
@@ -186,6 +217,8 @@ app.post("/liked", async (req: any, res: any) => {
   }
 });
 
+
+// funkar!
 app.get("/liked/:id", async (req: any, res: any) => {
   try {
     const id = parseInt(req.params.id);

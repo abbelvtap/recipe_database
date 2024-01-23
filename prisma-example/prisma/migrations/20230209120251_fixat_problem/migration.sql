@@ -3,7 +3,6 @@ CREATE TABLE "Recipes" (
     "recid" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "link" TEXT NOT NULL,
-    "picture" TEXT NOT NULL,
 
     CONSTRAINT "Recipes_pkey" PRIMARY KEY ("recid")
 );

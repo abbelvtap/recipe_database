@@ -36,7 +36,7 @@ const routes = [
     path: '/liked',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/likedPage.vue')}
+      { path: '', component: () => import('pages/LikedPage.vue')}
     ]
   },
   // Always leave this as last one,
